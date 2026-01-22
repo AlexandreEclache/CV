@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,19 +30,43 @@
     };
   </script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-up.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- liens des compétences --- */
+  .skill-link {
+    color: #6b5cff;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .skill-link:hover {
+    color: #00c4cc;
+    text-decoration: underline;
+  }
+
+  :target {
+  background-color: rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.dark :target {
+  background-color: rgba(59, 130, 246, 0.25);
+}
+</style>
 </head>
 <body class="bg-secondary text-slate-900 dark:bg-slate-950 dark:text-slate-100">
   <header class="fixed top-0 z-50 w-full bg-white/80 shadow backdrop-blur dark:bg-slate-900/80">
@@ -136,7 +160,7 @@
 
     <section id="vie-associative" class="mb-20">
       <div class="fade-up rounded-3xl bg-white p-10 shadow-soft dark:bg-slate-900">
-        <h3 class="mb-6 text-3xl font-semibold text-primary dark:text-white">Vie associative</h3>
+        <h3 id="highlight-vie-associative"class="mb-6 text-3xl font-semibold text-primary dark:text-white transition-all duration-700 rounded-lg">Vie associative</h3>
         <ul id="associative-list" class="grid gap-4 md:grid-cols-2"></ul>
       </div>
     </section>
@@ -185,39 +209,39 @@
       {
         periode: '2025 - aujourd\'hui',
         titre: 'Programme Grande École',
-        lieu: 'NEOMA Business School, Rouen',
+        lieu: '<a href="https://neoma-bs.fr/formations/programme-grande-ecole" target="_blank" class="text-accent transition hover:underline">NEOMA Business School</a>, Rouen',
         details: [
-          'Initiation à la comptabilité, à la comptabilité analytique, à l\'analyse de données, au Design Thinking, au droit des affaires, au marketing management, à la corporate finance.',
+          'Initiation à la comptabilité, au contrôle de gestion, à l\'analyse de données, au Design Thinking, au droit des affaires, au marketing management, à la corporate finance.',
           'Approfondissement des cours d\'économie, d\'anglais, d\'espagnol et de culture générale entamés en classe préparatoire.',
-          'Vie associative riche (tromboniste dans la fanfare, membre organisateur du tournoi EY Top Eight).',
+          'Vie associative riche (tromboniste dans la <a href="#vie-associative" href="#highlight-Fanf" class="text-accent text-black hover:underline"> fanfare</a>, membre organisateur du <a href="#vie-associative" class="text-accent text-black hover:underline"> tournoi EY Top Eight</a>).',
         ],
       },
       {
         periode: '2025',
         titre: 'Formations d\'initation et de perfectionnement à l\'IA (ChatGPT-5)',
-        lieu: 'Kovalia, Albi',
+        lieu: '<a href="https://kovalia.ai" target="_blank" class="text-accent transition hover:underline">Kovalia</a>, Albi',
         details: [
-          'Prompt engeneering et utilisation d\'agents spécialisés.',
-          'Utilisation avancée de la génération d\'images',
-          'Création de contenus html',
+          'Prompt engineering et utilisation d\'agents spécialisés.',
+          'Utilisation avancée de la génération d\'images.',
+          'Création de contenu html.',
 
         ],
       },
       {
         periode: '2023 - 2025',
-        titre: 'Classes préparatoires ECG',
-        lieu: 'Lycée post-bac Saliège, Région toulousaine',
+        titre: 'Classe préparatoire ECG',
+        lieu: '<a href="https://www.saliege.fr/les-formations/les-classes-preparatoires-cpge/cpge-ecg/" target="_blank" class="text-accent transition hover:underline">Lycée post-bac Saliège</a>, Région toulousaine',
         details: [
           'Option : Économie, sociologie et mathématiques appliquées.',
-          'Finaliste du concours d’éloquence de première année.',
+          'Finaliste du <a href="#vie-associative" class="text-accent text-black hover:underline"> concours d’éloquence</a> de première année.',
         ],
       },
       {
         periode: '2023',
         titre: 'Baccalauréat, mention assez bien',
-        lieu: 'Lycée Louis Rascol, Albi',
+        lieu: '<a href="https://louis-rascol.mon-ent-occitanie.fr" target="_blank" class="text-accent transition hover:underline">Lycée Louis Rascol</a>, Albi',
         details: [
-          'Co-création d’une Maison des Lycéens et gestion d’une équipe de 10 étudiants lors de l’année de terminale.',
+          'Co-création d’une <a href="#vie-associative" class="text-accent text-black hover:underline"> Maison des lycéens</a> et gestion d’une équipe de 10 étudiants lors de l’année de terminale.',
         ],
       },
     ];
@@ -226,45 +250,58 @@
     const experiences = [
       {
         poste: 'Serveur',
-        entreprise: 'Restaurant Les Arcades, Albi',
+        entreprise: '<a href="https://lesarcades-albi.fr" target="_blank" class="text-accent transition hover:underline">Restaurant Les Arcades</a>, Albi',
         periode: 'Été 2025 (1 mois), Été 2023 (3 mois), Été 2022 (4 mois), Week-ends ponctuels',
         missions: [
           'Accueil et service client, prise de commandes, gestion des paiements.',
           'Gestion des priorités et des imprévus en période d’affluence.',
           'Maintien d’une attitude professionnelle et positive face au stress.',
           '200 à 300 couverts servis par jour en haute saison.',
-          'https://lesarcades-albi.fr',
         ],
       },
       {
-        poste: 'Assistant cuisine et service',
-        entreprise: 'Maison Bigand',
+        poste: 'Assistant en cuisine et barman',
+        entreprise: '<a href="https://www.maisonbigand.fr" target="_blank" class="text-accent transition hover:underline">Maison Bigand</a>, Albi',
         periode: 'Été 2021 (3 semaines)',
         missions: [
           'Mise en pot, étiquetage et préparation de colis.',
-          'Rigueur et bonne humeur dans un environnement de production artisanal.',
-          'Respect des normes d’hygiène et de sécurité alimentaire.',
+          'Rigueur, bonne humeur, respect des normes d’hygiène et de sécurité alimentaire dans un environnement de production artisanal.',
+          'J’ai proposé d’organiser une soirée guinguette exceptionnelle où j’ai pu servir 60 clients lors de ma première expérience de service en restauration.',
           '600 pots préparés par jour.',
         ],
       },
       {
-        poste: 'Stagiaire en marketing',
-        entreprise: 'Phodé (Stage rémunéré)',
+        poste: 'Stage en marketing (rémunéré)',
+        entreprise: '<a href="https://www.phodé.com" target="_blank" class="text-accent transition hover:underline">Phodé</a>, Albi',
         periode: 'Été 2020 (1 semaine)',
         missions: [
           'Étude de la création d’un blog dans le cadre de la stratégie relationnelle.',
-          'Pré-étude pour la mise en place d’exosquelettes pour les ouvriers en production (mission attribuée par le PDG).',
-          'Rédaction d’un rapport de 5 pages avec recommandations stratégiques pour les exosquelettes.',
+          'Pré-étude pour la mise en place d’exosquelettes pour les ouvriers en production (mission attribuée par le PDG) et rédaction d’un court rapport de recommendations stratégiques.',
         ],
       },
       {
-        poste: 'Stage d’observation',
-        entreprise: 'Castres Olympique (Top 14)',
-        periode: 'Hiver 2019 (1 semaine)',
-        missions: [
-          'Analyse vidéo, enregistrement d’entraînements avec un drone et une caméra sur trépied, prospection de sponsors, soins des joueurs, coaching en musculation et en tactique terrain.',
-        ],
-      },
+  poste: 'Stage d’observation (non rémunéré)',
+  entreprise: '<a href="https://castres-olympique.com" target="_blank" class="text-accent transition hover:underline">Castres Olympique</a> (Top 14), Castres',
+  periode: 'Hiver 2019 (1 semaine)',
+  missions: [
+    {
+    title: 'Participation :',
+    sub: [
+      'à l’analyse vidéo,',
+      'à l’enregistrement d’entraînements (drone et caméra sur trépied),',
+      'au montage vidéo pour synthétiser les entraînements.'
+    ],
+  },
+  {
+    title: 'Observation :',
+    sub: [
+      'de la prospection de sponsors,',
+      'des soins des joueurs,',
+      'du coaching en musculation et en tactique terrain.',
+    ],
+  },
+],
+},
     ];
 
     // <!-- Modifier mes compétences ici -->
@@ -272,9 +309,9 @@
       {
         categorie: 'Outils maitrisés',
         items: [
-          'Prompt engineering et génération d’images sur ChatGPT',
-          'Canva',
-          'Codex, GitHub, Visual Studio Code (niveau débutant)',
+          'Prompt engineering et génération d’images sur <a href="https://chat.openai.com" target="_blank" class="text-accent transition hover:underline">ChatGPT</a>',
+          '<a href="https://www.canva.com" target="_blank" class="text-accent transition hover:underline">Canva</a>',
+          '<a href="https://openai.com/fr-FR/codex/" target="_blank" class="text-accent transition hover:underline">Codex</a>, <a href="https://github.com" target="_blank" class="text-accent transition hover:underline">GitHub</a>, <a href="https://code.visualstudio.com" target="_blank" class="text-accent transition hover:underline">Visual Studio Code</a> (niveau débutant)',
         ],
       },
       {
@@ -309,7 +346,8 @@
     // <!-- Modifier ma vie associative ici -->
     const associativeLife = [
       {
-        categorie: 'Fanfare, NEOMA-BS Rouen',
+        id: 'Fanfare',
+        categorie: '<a href="https://www.linkedin.com/company/full-metal-trompette-fanfare-neoma-business-school-rouen/?originalSubdomain=fr" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">Fanfare</a>, NEOMA-BS Rouen',
         periode: 'Octobre 2025 - Présent',
         items: [
           'Tromboniste',
@@ -318,14 +356,26 @@
         ],
       },
       {
-        categorie: 'Top Eight, NEOMA-BS Rouen',
+        id: 'TopEight',
+        categorie: '<a href="https://www.topeight.fr" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">Top Eight</a>, NEOMA-BS Rouen',
         periode: 'Octobre 2025 - Présent',
         items: [
-          'Organisation du tournoi EY Top Eight',
+          'Organisation du <a href="https://www.topeight.fr/tournoi-ey-top-eight" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">tournoi EY Top Eight</a>',
           'Membre du pôle démarchage',
         ],
       },
       {
+        id:'BB',
+        categorie: '<a href="https://www.instagram.com/brouenklynburgers_officiel/" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">Brouenklyn Burgers</a>, NEOMA-BS Rouen',
+        periode: 'Octobre 2025 - Présent',
+        items: [
+          'Président',
+          'Organisation de soirées open bar de fast-food pour les étudiants de NEOMA',
+          'Dernier événement en date : Tacos à volonté, soirée organisée dans un bar partenaire, 120 entrées enregistrées à 6,80€/personne'
+        ]
+      },
+      {
+        id: 'BDE',
         categorie: 'Membre du BDE en classe prépa',
         periode: 'Novembre 2024 - Juillet 2025',
         items: [
@@ -335,6 +385,7 @@
         ],
       },
       {
+        id: 'éloquence',
         categorie: 'Concours d’éloquence',
         periode: 'Novembre 2023 - Mai 2024',
         items: [
@@ -343,12 +394,13 @@
         ],
       },
      {
-        categorie: 'Maison des lycéens, Lycée Louis Rascol, Albi',
+        id: 'mdl',
+        categorie: '<a href="https://www.instagram.com/mdl_rascol/" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">Maison des lycéens</a>, Lycée Louis Rascol, Albi',
         periode: 'Septembre 2022 - Juillet 2023',
         items: [
           'Co-fondateur et responsable d’une équipe d’une dizaine de personnes',
           'Organisation d’événements pour dynamiser le campus',
-         'Tournois sportifs et de jeux vidéos, vente de cookies à but caritatif, organisation d’un déjeuner de Saint-Valentin, bal de promo... '
+         'Tournois sportifs et de jeux vidéos, vente de cookies à but caritatif, organisation d’un déjeuner de Saint-Valentin, bal de promo des terminales... '
         ],
       }
     ];
@@ -356,7 +408,7 @@
     // <!-- Modifier mes centres d'intérêt ici -->
     const interests = [
       'Rugby (15 ans de pratique, dont 3 ans au Castres Olympique (Top14), arbitrage de tournois jeunes)',
-      'Échecs, avec 1050 d’elo en blitz et 1100 en rapide sur chess.com',
+      'Échecs, avec 1050 d’elo en blitz et 1100 en rapide sur <a href="https://www.chess.com/member/alexxv6" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">chess.com</a>',
       'Kitesurf',
     ];
 
@@ -390,23 +442,57 @@
               <div class="flex flex-col gap-2">
                 <p class="text-sm font-semibold uppercase tracking-wide text-primary/80 dark:text-accent">${item.periode}</p>
                 <h4 class="text-xl font-semibold text-primary dark:text-white">${item.poste}</h4>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-300">${item.entreprise}</p>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-300">
+  ${
+    item.site
+      ? `<a href="${item.site}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-accent hover:underline">
+           ${item.entreprise}
+         </a>`
+      : item.entreprise
+  }
+</p>
                 <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
                   ${item.missions.map((mission) => {
-                   const isLink = mission.startsWith('http');
 
-                   return `
-                     <li class="flex items-start gap-3">
-                       <span class="mt-1 h-2 w-2 rounded-full bg-accent flex-shrink-0"></span>
-                       <span>
-                         ${
-                            isLink
-                             ? `<a href="${mission}" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
-                                ${mission}
-                               </a>`
-                             : mission
-        }
-      </span>
+  // 🔹 CAS 1 — mission simple (string)
+  if (typeof mission === 'string') {
+    const isLink = mission.startsWith('http');
+
+    return `
+      <li class="flex items-start gap-3">
+        <span class="mt-1 h-2 w-2 rounded-full bg-accent flex-shrink-0"></span>
+        <span>
+          ${
+            isLink
+              ? `<a href="${mission}" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+                   ${mission}
+                 </a>`
+              : mission
+          }
+        </span>
+      </li>
+    `;
+  }
+
+  // 🔹 CAS 2 — mission avec sous-points
+  return `
+    <li>
+      <div class="flex items-start gap-3">
+        <span class="mt-1 h-2 w-2 rounded-full bg-accent flex-shrink-0"></span>
+        <span class="font-medium">${mission.title}</span>
+      </div>
+
+      <ul class="ml-6 mt-2 space-y-1 text-sm text-slate-500 dark:text-slate-400">
+        ${mission.sub.map(sub => `
+          <li class="flex items-start gap-2">
+            <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+            <span>${sub}</span>
+          </li>
+        `).join('')}
+      </ul>
     </li>
   `;
 }).join('')}
@@ -453,6 +539,7 @@
     `)
     .join('');
 }
+
 
       if (interestList) {
         interestList.innerHTML = interests
@@ -571,6 +658,19 @@
 
     window.addEventListener('resize', handleResize);
     handleResize();
+
+    // 🔁 Sauvegarde de la position de scroll
+window.addEventListener('scroll', () => {
+  sessionStorage.setItem('scrollPosition', window.scrollY);
+});
+
+// 🔄 Restauration de la position au rechargement
+window.addEventListener('load', () => {
+  const scrollPosition = sessionStorage.getItem('scrollPosition');
+  if (scrollPosition !== null) {
+    window.scrollTo(0, parseInt(scrollPosition, 10));
+  }
+});
   </script>
 </body>
 </html>
