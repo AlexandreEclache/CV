@@ -58,14 +58,6 @@
     text-decoration: underline;
   }
 
-  :target {
-  background-color: rgba(59, 130, 246, 0.12);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
-}
-
-.dark :target {
-  background-color: rgba(59, 130, 246, 0.25);
-}
 </style>
 </head>
 <body class="bg-secondary text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -111,12 +103,12 @@
   <main class="mx-auto mt-24 max-w-6xl px-4 pb-16">
     <section id="accueil" class="mb-20 grid gap-10 lg:grid-cols-2 lg:items-center">
       <div class="fade-up space-y-6">
-        <p class="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">Bienvenue sur mon portfolio</p>
+        <p class="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">Bienvenue sur mon CV intéractif !</p>
         <div class="inline-flex flex-col rounded-3xl bg-primary px-8 py-6 text-white shadow-soft">
           <h1 class="text-4xl font-bold leading-tight sm:text-5xl">Alexandre Eclache</h1>
           <p class="mt-2 text-lg font-semibold text-white sm:text-xl">Neoma Business School (PGE) - Rouen</p>
           <p class="mt-2 text-lg font-semibold text-white sm:text-xl">En recherche de stage dans le domaine du luxe</p>
-          <p class="mt-2 text-lg font-semibold text-white sm:text-xl">pour 4 mois à partir de mai 2025</p>
+          <p class="mt-2 text-lg font-semibold text-white sm:text-xl">pour 4 mois à partir de mai 2026</p>
         </div>
         <p class="max-w-xl text-lg text-slate-600 dark:text-slate-300">Étudiant curieux et investi, passionné de rugby, je cherche à développer mes compétences professionnelles et m’impliquer à travers des projets à impact dans le secteur du luxe, de l'automobile ou de la santé.</p>
         <div class="flex flex-wrap gap-4">
@@ -408,7 +400,7 @@
     // <!-- Modifier mes centres d'intérêt ici -->
     const interests = [
       'Rugby (15 ans de pratique, dont 3 ans au Castres Olympique (Top14), arbitrage de tournois jeunes)',
-      'Échecs, avec 1050 d’elo en blitz et 1100 en rapide sur <a href="https://www.chess.com/member/alexxv6" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">chess.com</a>',
+      'Échecs, avec <strong><span id="elo-blitz">…</span></strong> d’elo en blitz et <strong><span id="elo-rapid">…</span></strong> en rapide sur <a href="https://www.chess.com/member/alexxv6" target="_blank" rel="noopener noreferrer" class="text-accent transition hover:underline">chess.com</a>',
       'Kitesurf',
     ];
 
@@ -429,7 +421,7 @@
                 <p class="text-sm text-slate-500 dark:text-slate-400">${item.lieu}</p>
               </div>
               <h4 class="mt-3 text-xl font-semibold text-primary dark:text-white">${item.titre}</h4>
-              ${item.details.length > 0 ? `<ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">${item.details.map((detail) => `<li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-accent"></span><span>${detail}</span></li>`).join('')}</ul>` : ''}
+              ${item.details.length > 0 ? `<ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">${item.details.map((detail) => `<li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-accent"></span><span>${detail}</span></li>`).join('')}</ul>` : ''}
             </article>
           `)
           .join('');
@@ -508,7 +500,7 @@
             <article class="rounded-2xl border border-slate-100 bg-slate-50 p-6 transition hover:border-accent hover:shadow-soft dark:border-slate-800 dark:bg-slate-950">
               <h4 class="text-lg font-semibold text-primary dark:text-white">${group.categorie}</h4>
               <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
-                ${group.items.map((skill) => `<li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-accent"></span><span>${skill}</span></li>`).join('')}
+                ${group.items.map((skill) => `<li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-accent"></span><span>${skill}</span></li>`).join('')}
               </ul>
             </article>
           `)
@@ -659,18 +651,54 @@
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    // 🔁 Sauvegarde de la position de scroll
-window.addEventListener('scroll', () => {
-  sessionStorage.setItem('scrollPosition', window.scrollY);
-});
 
-// 🔄 Restauration de la position au rechargement
-window.addEventListener('load', () => {
-  const scrollPosition = sessionStorage.getItem('scrollPosition');
-  if (scrollPosition !== null) {
-    window.scrollTo(0, parseInt(scrollPosition, 10));
-  }
+// 🔧 Nettoyage de l'ancre dans l'URL après navigation
+if (window.location.hash) {
+  history.replaceState(null, "", window.location.pathname);
+}
+
+// ♟️ Elo Chess.com — mise à jour automatique
+fetch("https://api.chess.com/pub/player/alexxv6/stats")
+  .then(res => res.json())
+  .then(data => {
+    const blitz = data.chess_blitz?.last?.rating;
+    const rapid = data.chess_rapid?.last?.rating;
+
+    if (blitz) {
+      document.getElementById("elo-blitz").textContent = blitz;
+    }
+    if (rapid) {
+      document.getElementById("elo-rapid").textContent = rapid;
+    }
+  })
+  .catch(() => {
+    document.getElementById("elo-blitz").textContent = "—";
+    document.getElementById("elo-rapid").textContent = "—";
+  });
+
+  // ⬆️ Bouton "Retour en haut"
+document.addEventListener("DOMContentLoaded", () => {
+  const backToTopBtn = document.getElementById("back-to-top");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+      backToTopBtn.classList.remove("hidden", "opacity-0", "scale-90");
+    } else {
+      backToTopBtn.classList.add("opacity-0", "scale-90");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 });
   </script>
+  <button
+  id="back-to-top"
+  aria-label="Retour en haut de la page"
+  class="fixed bottom-6 right-6 z-50 hidden scale-90 opacity-0 rounded-full bg-primary p-4 text-white shadow-lg transition-all duration-300 hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent"
+>
+  ↑
+</button>
 </body>
 </html>
