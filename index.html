@@ -57,50 +57,113 @@
     color: #00c4cc;
     text-decoration: underline;
   }
+  /* --- surlignage recherche type Ctrl+F --- */
+  mark.search-highlight {
+    background-color: #fde68a;
+    padding: 0 2px;
+    border-radius: 4px;
+  }
+
+  .dark mark.search-highlight {
+    background-color: #facc15;
+    color: #0f172a;
+  }
 
 </style>
 </head>
 <body class="bg-secondary text-slate-900 dark:bg-slate-950 dark:text-slate-100">
   <header class="fixed top-0 z-50 w-full bg-white/80 shadow backdrop-blur dark:bg-slate-900/80">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-      <a href="#accueil" class="text-lg font-semibold text-primary transition hover:text-accent">Alexandre Eclache</a>
-      <button id="nav-toggle" class="inline-flex items-center rounded-md p-2 text-primary transition hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent md:hidden" aria-label="Ouvrir le menu">
-        <svg id="nav-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+  <nav class="mx-auto grid max-w-6xl grid-cols-[auto_1fr] items-center gap-x-10 px-4 py-4">
+
+    <!-- Bloc gauche : nom + burger -->
+    <div class="flex items-center gap-4">
+      <a
+        href="#"
+        id="home-link"
+        aria-label="Retour en haut de la page"
+        class="nav-link whitespace-nowrap text-lg font-semibold text-primary transition hover:text-accent"
+      >
+        Alexandre Eclache
+      </a>
+
+      <!-- Burger (mobile uniquement) -->
+      <button
+        id="nav-toggle"
+        class="inline-flex items-center rounded-md p-2 text-primary transition hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent md:hidden"
+        aria-label="Ouvrir le menu"
+      >
+        <svg
+          id="nav-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg id="nav-icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+
+        <svg
+          id="nav-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          class="hidden h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <div id="nav-links" class="hidden flex-col space-y-3 text-sm md:flex md:flex-row md:flex-nowrap md:items-center md:gap-6 md:space-y-0 md:[&>*]:whitespace-nowrap">
-        <a href="#accueil" class="nav-link">Accueil</a>
-        <a href="#formation" class="nav-link">Formation</a>
-        <a href="#experiences" class="nav-link">Expériences</a>
-        <a href="#competences" class="nav-link">Compétences</a>
-        <a href="#vie-associative" class="nav-link">Vie associative</a>
-        <a href="#centres-interet" class="nav-link">Centres d’intérêt</a>
-        <a href="#etat-civil" class="nav-link">État civil</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <button id="dark-toggle" class="rounded-full bg-primary px-4 py-1 text-sm font-medium text-white transition hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent">Mode sombre</button>
-      </div>
-    </nav>
-    <div id="mobile-menu" class="hidden border-t border-slate-100 bg-white px-4 py-4 shadow md:hidden dark:border-slate-800 dark:bg-slate-900">
-      <div class="flex flex-col space-y-3">
-        <a href="#accueil" class="nav-link">Accueil</a>
-        <a href="#apropos" class="nav-link">À propos</a>
-        <a href="#formation" class="nav-link">Formation</a>
-        <a href="#experiences" class="nav-link">Expériences</a>
-        <a href="#competences" class="nav-link">Compétences</a>
-        <a href="#vie-associative" class="nav-link">Vie associative</a>
-        <a href="#centres-interet" class="nav-link">Centres d’intérêt</a>
-        <a href="#etat-civil" class="nav-link">État civil</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <button id="dark-toggle-mobile" class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent">Mode sombre</button>
-      </div>
     </div>
-  </header>
 
-  <main class="mx-auto mt-24 max-w-6xl px-4 pb-16">
+    <!-- Menu desktop -->
+    <div
+      id="nav-links"
+      class="hidden justify-self-end flex-col space-y-3 text-sm
+             md:flex md:flex-row md:flex-nowrap md:items-center
+             md:gap-6 md:space-y-0 md:[&>*]:whitespace-nowrap"
+    >
+      <a href="#formation" class="nav-link">Formation</a>
+      <a href="#experiences" class="nav-link">Expériences</a>
+      <a href="#competences" class="nav-link">Compétences</a>
+      <a href="#vie-associative" class="nav-link">Vie associative</a>
+      <a href="#centres-interet" class="nav-link">Centres d’intérêt</a>
+      <a href="#etat-civil" class="nav-link">État civil</a>
+      <a href="#contact" class="nav-link">Contact</a>
+
+      <!-- Recherche -->
+      <div class="relative">
+        <input
+          id="nav-search"
+          type="text"
+          placeholder="Rechercher dans le CV…"
+          autocomplete="off"
+          class="w-48 rounded-full border border-slate-300 bg-white px-4 py-1 text-sm text-slate-700
+                 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent
+                 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+        />
+        <ul
+          id="search-suggestions"
+          class="absolute left-0 right-0 z-50 mt-2 hidden max-h-60 overflow-auto rounded-xl
+                 border border-slate-200 bg-white text-sm shadow-lg
+                 dark:border-slate-700 dark:bg-slate-900"
+        ></ul>
+      </div>
+
+      <button
+        id="dark-toggle"
+        class="rounded-full bg-primary px-4 py-1 text-sm font-medium text-white transition hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent"
+      >
+        Mode sombre
+      </button>
+    </div>
+
+  </nav>
+</header>
+
+  <main class="mx-auto mt-24 max-w-7xl px-4 pb-16">
     <section id="accueil" class="mb-20 grid gap-10 lg:grid-cols-2 lg:items-center">
       <div class="fade-up space-y-6">
         <p class="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">Bienvenue sur mon CV intéractif !</p>
@@ -112,7 +175,7 @@
         </div>
         <p class="max-w-xl text-lg text-slate-600 dark:text-slate-300">Étudiant curieux et investi, passionné de rugby, je cherche à m'ouvrir au monde de l'entreprise via le marketing digital et m’impliquer dans des projets à impact dans le secteur du luxe, de l'automobile ou de la santé.</p>
         <div class="flex flex-wrap gap-4">
-          <a href="CV/CV-ALEXANDRE-ECLACHE-PDF.pdf" class="inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-accent" target="_blank" rel="noopener">
+          <a href="assets/CV Eclache Alexandre -CPGE ECG.pdf" class="inline-flex items-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-accent" target="_blank" rel="noopener">
             📄 Télécharger mon CV (PDF)
           </a>
           <a href="#contact" class="inline-flex items-center rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white dark:border-slate-600 dark:text-slate-100 dark:hover:bg-accent dark:hover:text-slate-900">
@@ -692,6 +755,95 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
+
+  
+  const searchableSections = document.querySelectorAll("main section");
+const searchInput = document.getElementById("nav-search");
+const suggestionsBox = document.getElementById("search-suggestions");
+
+let searchIndex = [];
+
+const buildSearchIndex = () => {
+  searchIndex = [];
+
+  searchableSections.forEach(section => {
+    section.querySelectorAll("h3, h4, p, li, span").forEach(el => {
+      const text = el.textContent.trim();
+      if (text.length > 3) {
+        searchIndex.push({
+          text,
+          element: el
+        });
+      }
+    });
+  });
+};
+
+buildSearchIndex();
+
+const clearHighlights = () => {
+  document.querySelectorAll("mark.search-highlight").forEach(mark => {
+    mark.replaceWith(document.createTextNode(mark.textContent));
+  });
+};
+
+const highlightText = (element, query) => {
+  const regex = new RegExp(`(${query})`, "gi");
+  element.innerHTML = element.textContent.replace(
+    regex,
+    `<mark class="search-highlight">$1</mark>`
+  );
+};
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  suggestionsBox.innerHTML = "";
+  clearHighlights();
+
+  if (!query || query.length < 2) {
+    suggestionsBox.classList.add("hidden");
+    return;
+  }
+
+  const matches = searchIndex
+    .filter(item => item.text.toLowerCase().includes(query))
+    .slice(0, 6);
+
+  if (matches.length === 0) {
+    suggestionsBox.classList.add("hidden");
+    return;
+  }
+
+  matches.forEach(match => {
+    const li = document.createElement("li");
+    li.textContent = match.text;
+    li.className =
+      "cursor-pointer px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800";
+
+    li.addEventListener("click", () => {
+      clearHighlights();
+      highlightText(match.element, query);
+
+      match.element.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      searchInput.value = "";
+      suggestionsBox.classList.add("hidden");
+    });
+
+    suggestionsBox.appendChild(li);
+  });
+
+  document.addEventListener("click", (e) => {
+  if (!e.target.closest(".relative")) {
+    suggestionsBox.classList.add("hidden");
+  }
+});
+
+  suggestionsBox.classList.remove("hidden");
+});
+  
   </script>
   <button
   id="back-to-top"
