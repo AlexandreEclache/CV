@@ -81,7 +81,7 @@
         href="#"
         id="home-link"
         aria-label="Retour en haut de la page"
-        class="nav-link whitespace-nowrap text-lg font-semibold text-primary transition hover:text-accent"
+        class="whitespace-nowrap text-lg font-semibold text-primary hover:text-accent transition"
       >
         Alexandre Eclache
       </a>
@@ -609,30 +609,77 @@
       }
     };
 
-    renderLists();
+renderLists();
+
+  //Collecter tout le texte du CV
+ const searchableSections = document.querySelectorAll("main section");
+const searchInput = document.getElementById("nav-search");
+const suggestionsBox = document.getElementById("search-suggestions");
+
+
+let searchIndex = [];
+
+    const buildSearchIndex = () => {
+  searchIndex = [];
+
+  searchableSections.forEach(section => {
+    section.querySelectorAll("h3, h4, p, li, span").forEach(el => {
+      const text = el.textContent.trim();
+      if (text.length > 3) {
+        searchIndex.push({
+          text,
+          element: el
+        });
+      }
+    });
+  });
+};
+
+buildSearchIndex();
+
+    // Animation au scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    document.querySelectorAll('.fade-up').forEach((element) => {
+      observer.observe(element);
+    });
+
 
     // Gestion du menu mobile
     const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenu = navLinks;
     const navIconOpen = document.getElementById('nav-icon-open');
     const navIconClose = document.getElementById('nav-icon-close');
 
     const toggleMobileMenu = () => {
-      mobileMenu.classList.toggle('hidden');
-      navIconOpen.classList.toggle('hidden');
-      navIconClose.classList.toggle('hidden');
-    };
+  navLinks.classList.toggle('hidden');  
+  navIconOpen.classList.toggle('hidden');
+  navIconClose.classList.toggle('hidden');
+};
+
 
     if (navToggle) {
       navToggle.addEventListener('click', toggleMobileMenu);
     }
 
-    document.querySelectorAll('#mobile-menu .nav-link').forEach((link) => {
+    document.querySelectorAll('#nav-links .nav-link').forEach((link) => {
       link.addEventListener('click', () => {
-        if (!mobileMenu.classList.contains('hidden')) {
-          toggleMobileMenu();
-        }
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+  toggleMobileMenu();
+}
       });
     });
 
@@ -675,24 +722,9 @@
       }
     });
 
-    // Animation au scroll
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-      }
-    );
 
-    document.querySelectorAll('.fade-up').forEach((element) => {
-      observer.observe(element);
-    });
+
+
 
     // Animation des liens de navigation
     document.querySelectorAll('.nav-link').forEach((link) => {
@@ -739,61 +771,40 @@ fetch("https://api.chess.com/pub/player/alexxv6/stats")
     document.getElementById("elo-rapid").textContent = "—";
   });
 
-  // ⬆️ Bouton "Retour en haut"
-document.addEventListener("DOMContentLoaded", () => {
-  const backToTopBtn = document.getElementById("back-to-top");
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
-      backToTopBtn.classList.remove("hidden", "opacity-0", "scale-90");
-    } else {
-      backToTopBtn.classList.add("opacity-0", "scale-90");
-    }
-  });
 
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
 
-  
-  const searchableSections = document.querySelectorAll("main section");
-const searchInput = document.getElementById("nav-search");
-const suggestionsBox = document.getElementById("search-suggestions");
-
-let searchIndex = [];
-
-const buildSearchIndex = () => {
-  searchIndex = [];
-
-  searchableSections.forEach(section => {
-    section.querySelectorAll("h3, h4, p, li, span").forEach(el => {
-      const text = el.textContent.trim();
-      if (text.length > 3) {
-        searchIndex.push({
-          text,
-          element: el
-        });
-      }
-    });
-  });
-};
-
-buildSearchIndex();
-
+//nettoyer les anciens highlights
 const clearHighlights = () => {
+  document.querySelectorAll("mark.search-highlight").forEach(mark => {
+    const clearHighlights = () => {
   document.querySelectorAll("mark.search-highlight").forEach(mark => {
     mark.replaceWith(document.createTextNode(mark.textContent));
   });
 };
 
+  });
+};
+
+
+//surligner le mot recherché
 const highlightText = (element, query) => {
   const regex = new RegExp(`(${query})`, "gi");
-  element.innerHTML = element.textContent.replace(
-    regex,
-    `<mark class="search-highlight">$1</mark>`
-  );
+
+  element.childNodes.forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE && regex.test(node.textContent)) {
+      const span = document.createElement("span");
+      span.innerHTML = node.textContent.replace(
+        regex,
+        `<mark class="search-highlight">$1</mark>`
+      );
+      node.replaceWith(span);
+    }
+  });
 };
+
+
+//suggestions dynamiques
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase().trim();
   suggestionsBox.innerHTML = "";
@@ -835,15 +846,15 @@ searchInput.addEventListener("input", () => {
     suggestionsBox.appendChild(li);
   });
 
-  document.addEventListener("click", (e) => {
+  suggestionsBox.classList.remove("hidden");
+});
+
+//fermer les suggestions en cliquant en dehors
+document.addEventListener("click", (e) => {
   if (!e.target.closest(".relative")) {
     suggestionsBox.classList.add("hidden");
   }
-});
-
-  suggestionsBox.classList.remove("hidden");
-});
-  
+});   
   </script>
   <button
   id="back-to-top"
